@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "accounts",
     "rest_framework",
     "djoser",
+    "drf_spectacular",
 ]
 
 MIDDLEWARE = [
@@ -117,8 +118,18 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("JWT",),
+}
+
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Adesua Learning Backend",
+    "DESCRIPTION": "Backend of my Adesua Application",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # OTHER SETTINGS
 }
