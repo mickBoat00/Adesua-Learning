@@ -35,7 +35,7 @@ def test_create_user_method():
     assert not user.is_superuser
     assert user.is_staff
     assert user.is_active
-    assert not user.first_name == "mick"
+    assert not user.first_name != "mick"
 
 
 def test_create_superuser_method():
