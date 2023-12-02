@@ -3,3 +3,5 @@ python-dotenv
 djoser
 djangorestframework
 drf-spectacular
+pytest-django
+pytest-env
