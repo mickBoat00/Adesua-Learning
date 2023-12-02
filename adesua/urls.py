@@ -18,11 +18,16 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
+from course import views as course_views
+
 urlpatterns = [
     path(
         "",
         SpectacularSwaggerView.as_view(url_name="schema"),
         name="swagger-ui",
+    ),
+    path(
+        "api/curriculum/", course_views.CurriculumListView.as_view(), name="curriculum"
     ),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("admin/", admin.site.urls),

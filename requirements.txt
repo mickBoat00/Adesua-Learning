@@ -30,6 +30,8 @@ django==4.2.7
     #   djoser
     #   drf-spectacular
     #   social-auth-app-django
+django-autoslug==1.9.9
+    # via -r requirements.in
 django-templated-mail==1.1.1
     # via djoser
 djangorestframework==3.14.0

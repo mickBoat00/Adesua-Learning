@@ -33,10 +33,13 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "accounts",
+    # third party apps
     "rest_framework",
     "djoser",
     "drf_spectacular",
+    # local apps
+    "course",
+    "accounts",
 ]
 
 MIDDLEWARE = [

@@ -5,3 +5,4 @@ djangorestframework
 drf-spectacular
 pytest-django
 pytest-env
+django-autoslug
