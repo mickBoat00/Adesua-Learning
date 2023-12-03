@@ -12,8 +12,8 @@ RUN apt-get update && \
 COPY ./requirements ./requirements
 COPY ./scripts ./scripts
 RUN pip install --upgrade pip && pip install pip-tools && \
-    pip-compile requirements/production.in && \
-    pip-sync requirements/production.txt && \
+    pip-compile requirements/requirements.in && \
+    pip-sync requirements/requirements.txt && \
     chmod +x ./scripts/docker-entrypoint.sh && \
     chmod 755 ./scripts/docker-entrypoint.sh
 
