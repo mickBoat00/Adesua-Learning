@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-02 02:27+0000\n"
+"POT-Creation-Date: 2023-12-02 16:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-
-#: accounts/admin.py:18
-msgid "email"
-msgstr "emil"
 
 #: accounts/managers.py:15
 msgid "The Email must be set"
@@ -37,6 +33,19 @@ msgstr "Superuser muss is_staff=True haben."
 #: accounts/models.py:14
 msgid "email address"
 msgstr "E-Mail-Adresse"
+
+#: course/models.py:15
+msgid "Code Name"
+msgstr "Code Name"
+
+#: course/models.py:16
+msgid "Curriculum Name"
+msgstr "Name des Lehrplans"
+
+#: venv/lib/python3.11/site-packages/_pytest/config/argparsing.py:474
+#, python-format
+msgid "ambiguous option: %(option)s could match %(matches)s"
+msgstr ""
 
 #: venv/lib/python3.11/site-packages/click/_termui_impl.py:518
 #, python-brace-format
@@ -1523,4 +1532,32 @@ msgstr ""
 
 #: venv/lib/python3.11/site-packages/django/views/templates/default_urlconf.html:248
 msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/drf_spectacular/openapi.py:1352
+#: venv/lib/python3.11/site-packages/drf_spectacular/openapi.py:1405
+#: venv/lib/python3.11/site-packages/drf_spectacular/openapi.py:1409
+#: venv/lib/python3.11/site-packages/drf_spectacular/openapi.py:1413
+msgid "No response body"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/drf_spectacular/openapi.py:1377
+#: venv/lib/python3.11/site-packages/drf_spectacular/openapi.py:1429
+msgid "Unspecified response body"
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/drf_spectacular/plumbing.py:460
+#, python-format
+msgid "Token-based authentication with required prefix \"%s\""
+msgstr ""
+
+#: venv/lib/python3.11/site-packages/drf_spectacular/views.py:44
+msgid ""
+"\n"
+"    OpenApi3 schema for this API. Format can be selected via content "
+"negotiation.\n"
+"\n"
+"    - YAML: application/vnd.oai.openapi\n"
+"    - JSON: application/vnd.oai.openapi+json\n"
+"    "
 msgstr ""

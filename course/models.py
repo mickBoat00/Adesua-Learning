@@ -15,6 +15,9 @@ class Curriculum(TimeStampModel):
     short_name = models.CharField(_("Code Name"), max_length=10)
     name = models.CharField(_("Curriculum Name"), max_length=100)
 
+    class Meta:
+        verbose_name_plural = _("Curricula")
+
     def __str__(self):
         return self.name
 
