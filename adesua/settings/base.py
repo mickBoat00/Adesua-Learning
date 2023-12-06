@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     "djoser",
     "drf_spectacular",
     # local apps
-    "course",
-    "accounts",
+    "apps.courses",
+    "apps.accounts",
 ]
 
 MIDDLEWARE = [
