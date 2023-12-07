@@ -8,3 +8,4 @@ pytest-env
 django-autoslug
 psycopg2
 django-autoslug
+pytest-factoryboy
