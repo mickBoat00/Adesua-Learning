@@ -1,3 +1,8 @@
+from decimal import Decimal
+
+from autoslug import AutoSlugField
+from django.conf import settings
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -20,3 +25,90 @@ class Curriculum(TimeStampModel):
 
     def __str__(self):
         return self.name
+
+
+class Subject(TimeStampModel):
+    name = models.CharField(_("Subject Name"), max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class Course(TimeStampModel):
+    YEAR = [(i, i) for i in range(1, 13)]
+
+    PAY_CHOICES = [
+        ("Free", "Free"),
+        ("Paid", "Paid"),
+    ]
+
+    STATUS_CHOICES = [
+        ("Pending", "Pending"),
+        ("Approved", "Approved"),
+    ]
+
+    title = models.CharField(verbose_name=_("Course Title"), max_length=100)
+    slug = AutoSlugField(
+        populate_from="title", editable=False, unique=True, always_update=True
+    )
+    curriculum = models.ForeignKey(
+        Curriculum, on_delete=models.CASCADE, verbose_name=_("Course Syllables")
+    )
+    subject = models.ForeignKey(
+        Subject, on_delete=models.PROTECT, verbose_name=_("Course Subject")
+    )
+    year = models.CharField(
+        verbose_name=_("Year"),
+        max_length=2,
+        choices=YEAR,
+    )
+    description = models.TextField()
+    # cover_image = models.ImageField(verbose_name=_("Main Image"), default="default.png", upload_to="course_images", null=True, blank=True)
+    price = models.DecimalField(
+        verbose_name=_("Price"),
+        max_digits=8,
+        decimal_places=2,
+        default=0.0,
+        validators=[MinValueValidator(Decimal("0.00"))],
+    )
+
+    enrollment_type = models.CharField(
+        verbose_name=_("Paid / Free"),
+        max_length=4,
+        choices=PAY_CHOICES,
+        default="Free",
+    )
+
+    instructor = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        verbose_name=_("Course Instructor"),
+        related_name="courses",
+        on_delete=models.CASCADE,
+    )
+
+    status = models.CharField(
+        verbose_name=_("Status"),
+        max_length=8,
+        choices=STATUS_CHOICES,
+        default="Pending",
+    )
+
+    published_status = models.BooleanField(
+        verbose_name=_("Published Status"), default=False
+    )
+
+    class Meta:
+        verbose_name = _("Course")
+        verbose_name_plural = _("Courses")
+        # ordering = ("-created_on",)
+
+    def save(self, *args, **kwargs):
+        self.title = str.title(self.title)
+        if self.enrollment_type == "Free":
+            self.price = 0.00
+        if self.status == "Approved":
+            self.published_status = True
+        super(Course, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
