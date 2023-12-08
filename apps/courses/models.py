@@ -115,7 +115,7 @@ class Course(TimeStampModel):
         return self.title
 
 
-class Lessons(TimeStampModel):
+class Lesson(TimeStampModel):
     course = models.ForeignKey(
         Course,
         verbose_name=_("Course Lesson"),
@@ -125,8 +125,8 @@ class Lessons(TimeStampModel):
     title = models.CharField(verbose_name=_("Lesson Title"), max_length=255)
     video = models.FileField(
         verbose_name=_("Lesson Title"),
-        upload="course_lessons",
-        validators=[FileExtensionValidator([".mp4", ".webm", ".mkv", ".flv"])],
+        upload_to="course_lessons",
+        validators=[FileExtensionValidator(["mp4", "webm", "mkv", "flv"])],
     )
 
     def __str__(self):

@@ -26,6 +26,7 @@ from apps.courses import views as course_views
 router = routers.DefaultRouter()
 router.register(r"subjects", course_views.SubjectModelViewset, basename="subjects")
 router.register(r"courses", course_views.CourseModelViewset, basename="courses")
+router.register(r"lessons", course_views.LessonModelViewset, basename="lessons")
 
 urlpatterns = [
     path(

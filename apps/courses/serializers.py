@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Course, Curriculum, Subject
+from .models import Course, Curriculum, Lesson, Subject
 
 
 class CurriculumSerializer(serializers.ModelSerializer):
@@ -20,15 +20,6 @@ class SubjectSerializer(serializers.ModelSerializer):
             "id",
             "name",
         )
-
-
-class ReadCourseSerializer(serializers.ModelSerializer):
-    curriculum = CurriculumSerializer()
-    subject = SubjectSerializer()
-
-    class Meta:
-        model = Course
-        fields = "__all__"
 
 
 class CreateCourseSerializer(serializers.ModelSerializer):
@@ -63,3 +54,20 @@ class CreateCourseSerializer(serializers.ModelSerializer):
             instance.subject = subject
             instance.save()
         return super().update(instance, validated_data)
+
+
+class LessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = "__all__"
+
+
+class ReadCourseSerializer(serializers.ModelSerializer):
+    curriculum = CurriculumSerializer()
+    subject = SubjectSerializer()
+    lessons = LessonSerializer(many=True)
+
+    class Meta:
+        model = Course
+        fields = "__all__"
+        read_only_fields = [fields]

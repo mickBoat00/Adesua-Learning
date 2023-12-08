@@ -1,11 +1,12 @@
 from rest_framework import permissions, viewsets
 from rest_framework.generics import ListAPIView
 
-from .models import Course, Curriculum, Subject
+from .models import Course, Curriculum, Lesson, Subject
 from .permissions import IsOwnerOrReadOnly
-from .serializer import (
+from .serializers import (
     CreateCourseSerializer,
     CurriculumSerializer,
+    LessonSerializer,
     ReadCourseSerializer,
     SubjectSerializer,
 )
@@ -39,3 +40,8 @@ class CourseModelViewset(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         return serializer.save(instructor=self.request.user)
+
+
+class LessonModelViewset(viewsets.ModelViewSet):
+    queryset = Lesson.objects.all()
+    serializer_class = LessonSerializer

@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 from apps.courses.models import Course, Curriculum
-from apps.courses.serializer import CurriculumSerializer, ReadCourseSerializer
+from apps.courses.serializers import CurriculumSerializer, ReadCourseSerializer
 
 client = APIClient()
 
