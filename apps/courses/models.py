@@ -2,7 +2,7 @@ from decimal import Decimal
 
 from autoslug import AutoSlugField
 from django.conf import settings
-from django.core.validators import MinValueValidator
+from django.core.validators import FileExtensionValidator, MinValueValidator
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
@@ -110,6 +110,24 @@ class Course(TimeStampModel):
         if self.status == "Approved":
             self.published_status = True
         super(Course, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+
+class Lessons(TimeStampModel):
+    course = models.ForeignKey(
+        Course,
+        verbose_name=_("Course Lesson"),
+        on_delete=models.CASCADE,
+        related_name="lessons",
+    )
+    title = models.CharField(verbose_name=_("Lesson Title"), max_length=255)
+    video = models.FileField(
+        verbose_name=_("Lesson Title"),
+        upload="course_lessons",
+        validators=[FileExtensionValidator([".mp4", ".webm", ".mkv", ".flv"])],
+    )
 
     def __str__(self):
         return self.title
