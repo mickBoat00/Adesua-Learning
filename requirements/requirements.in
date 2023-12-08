@@ -10,3 +10,4 @@ psycopg2
 django-autoslug
 pytest-factoryboy
 pillow
+django-debug-toolbar
