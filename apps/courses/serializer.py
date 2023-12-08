@@ -44,6 +44,7 @@ class CreateCourseSerializer(serializers.ModelSerializer):
             "description",
             "curriculum",
             "subject",
+            "cover_image",
             "year",
             "price",
             "enrollment_type",

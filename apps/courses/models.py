@@ -63,7 +63,9 @@ class Course(TimeStampModel):
         choices=YEAR,
     )
     description = models.TextField()
-    # cover_image = models.ImageField(verbose_name=_("Main Image"), default="default.png", upload_to="course_images", null=True, blank=True)
+    cover_image = models.ImageField(
+        verbose_name=_("Main Image"), upload_to="course_images", null=True, blank=True
+    )
     price = models.DecimalField(
         verbose_name=_("Price"),
         max_digits=8,
@@ -100,7 +102,6 @@ class Course(TimeStampModel):
     class Meta:
         verbose_name = _("Course")
         verbose_name_plural = _("Courses")
-        # ordering = ("-created_on",)
 
     def save(self, *args, **kwargs):
         self.title = str.title(self.title)

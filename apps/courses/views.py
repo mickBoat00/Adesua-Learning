@@ -19,12 +19,15 @@ class CurriculumListView(ListAPIView):
 class SubjectModelViewset(viewsets.ModelViewSet):
     queryset = Subject.objects.all()
     serializer_class = SubjectSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
 
 
 class CourseModelViewset(viewsets.ModelViewSet):
     queryset = Course.objects.all()
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly,
+    )
 
     def get_serializer_class(self):
         if self.action in (
