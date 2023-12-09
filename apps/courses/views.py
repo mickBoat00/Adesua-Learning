@@ -5,9 +5,11 @@ from .models import Course, Curriculum, Lesson, Subject
 from .permissions import IsOwnerOrReadOnly
 from .serializers import (
     CreateCourseSerializer,
+    CreateLessonSerializer,
     CurriculumSerializer,
-    LessonSerializer,
-    ReadCourseSerializer,
+    DetailCourseSerializer,
+    ListCourseSerializer,
+    ReadLessonSerializer,
     SubjectSerializer,
 )
 
@@ -24,18 +26,20 @@ class SubjectModelViewset(viewsets.ModelViewSet):
 
 
 class CourseModelViewset(viewsets.ModelViewSet):
-    queryset = Course.objects.all()
+    queryset = Course.objects.prefetch_related("lessons").select_related(
+        "curriculum", "subject", "instructor"
+    )
     permission_classes = (
         permissions.IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly,
     )
 
     def get_serializer_class(self):
-        if self.action in (
-            "list",
-            "retrieve",
-        ):
-            return ReadCourseSerializer
+        if self.action == "list":
+            return ListCourseSerializer
+
+        if self.action == "retrieve":
+            return DetailCourseSerializer
         return CreateCourseSerializer
 
     def perform_create(self, serializer):
@@ -43,5 +47,10 @@ class CourseModelViewset(viewsets.ModelViewSet):
 
 
 class LessonModelViewset(viewsets.ModelViewSet):
-    queryset = Lesson.objects.all()
-    serializer_class = LessonSerializer
+    queryset = Lesson.objects.select_related("course")
+
+    def get_serializer_class(self):
+        if self.action in ("list", "retrieve"):
+            return ReadLessonSerializer
+        if self.action == "create":
+            return CreateLessonSerializer

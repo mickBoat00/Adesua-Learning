@@ -56,18 +56,43 @@ class CreateCourseSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class LessonSerializer(serializers.ModelSerializer):
+class ReadLessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        exclude = ["video"]
+        read_only_fields = ["__all__"]
+
+
+class EnrolledStudentLessonSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lesson
+        fields = "__all__"
+        read_only_field = [fields]
+
+
+class CreateLessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = "__all__"
 
+    def __init__(self, instance=None, data=..., **kwargs):
+        super().__init__(instance, data, **kwargs)
+        self.fields["course"].queryset = self.context.get("request").user.courses.all()
 
-class ReadCourseSerializer(serializers.ModelSerializer):
+
+class ListCourseSerializer(serializers.ModelSerializer):
     curriculum = CurriculumSerializer()
     subject = SubjectSerializer()
-    lessons = LessonSerializer(many=True)
+    lessons_number = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
         fields = "__all__"
         read_only_fields = [fields]
+
+    def get_lessons_number(self, obj) -> int:
+        return obj.lessons.count()
+
+
+class DetailCourseSerializer(ListCourseSerializer):
+    lessons = EnrolledStudentLessonSerializer(many=True)
