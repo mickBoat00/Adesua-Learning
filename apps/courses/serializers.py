@@ -84,6 +84,7 @@ class ListCourseSerializer(serializers.ModelSerializer):
     curriculum = CurriculumSerializer()
     subject = SubjectSerializer()
     lessons_number = serializers.SerializerMethodField()
+    students = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
@@ -93,6 +94,45 @@ class ListCourseSerializer(serializers.ModelSerializer):
     def get_lessons_number(self, obj) -> int:
         return obj.lessons.count()
 
+    def get_students(self, obj) -> int:
+        return obj.students.count()
+
 
 class DetailCourseSerializer(ListCourseSerializer):
     lessons = EnrolledStudentLessonSerializer(many=True)
+
+
+class EnrollStudentWithoutInitSerializer(serializers.Serializer):
+    course = serializers.PrimaryKeyRelatedField(
+        label="Course ID", queryset=Course.objects.all()
+    )
+    student = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+
+class EnrollStudentSerializer(serializers.Serializer):
+    course = serializers.PrimaryKeyRelatedField(
+        label="Course ID", queryset=Course.objects.all()
+    )
+    student = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
+    # def __init__(self, instance=None, data=..., **kwargs):
+    #     super().__init__(instance, data, **kwargs)
+    #     user = self.context.get("request").user
+    # self.fields["course"].queryset = Course.objects.exclude(Q(instructor=user) | Q(students=user))
+
+    def validate_course(self, value):
+        print(dir(self))
+        print(self.context)
+        raise serializers.ValidationError("Cannot enroll in course")
+        # return False
+
+
+class PayForCourseSerializer(serializers.Serializer):
+    mobile_number = serializers.CharField()
+
+    def validate_mobile_number(self, data):
+        if data != "0551234987":
+            raise serializers.ValidationError(
+                "For testing purpose, Please use the Paystack test number '0551234987' "
+            )
+        return data

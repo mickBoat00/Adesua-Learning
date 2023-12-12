@@ -99,6 +99,10 @@ class Course(TimeStampModel):
         verbose_name=_("Published Status"), default=False
     )
 
+    students = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="enrolled_courses"
+    )
+
     class Meta:
         verbose_name = _("Course")
         verbose_name_plural = _("Courses")

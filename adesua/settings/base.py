@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "djoser",
     "drf_spectacular",
+    "django_filters",
     # local apps
     "apps.courses",
     "apps.accounts",
@@ -127,18 +128,21 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticatedOrReadOnly",
     ],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    # 'PAGE_SIZE': 10,
+    "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
 }
 
 SIMPLE_JWT = {
     "AUTH_HEADER_TYPES": ("JWT",),
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(minutes=360),
 }
 
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "Adesua Learning Backend",
-    "DESCRIPTION": "Backend of my Adesua Application",
+    "DESCRIPTION": "Backend of Adesua Application",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
     "SCHEMA_PATH_PREFIX": "/api/",
@@ -150,3 +154,6 @@ STATIC_ROOT = BASE_DIR / "static"
 STATICFILES_DIR = []
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+
+PAYSTACK_SECRET_KEY = os.environ["PAYSTACK_SECRET_KEY"]

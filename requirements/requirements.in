@@ -11,3 +11,4 @@ django-autoslug
 pytest-factoryboy
 pillow
 django-debug-toolbar
+django-filter
