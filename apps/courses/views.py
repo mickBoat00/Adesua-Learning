@@ -89,7 +89,31 @@ class CourseModelViewset(viewsets.ModelViewSet):
                 course.price, user.email, serializer.data["mobile_number"]
             )
 
-            return Response(response.json()["data"], status=response.status_code)
+            if response.json()["data"]["status"] == "success":
+                course.students.add(user)
+
+            return Response(
+                {"success": f"{user.email} is enrolled in course {course.title}"},
+                status=status.HTTP_201_CREATED,
+            )
+
+        if request.method == "DELETE":
+            course = self.get_object()
+
+            user = request.user
+
+            if user not in course.students.all():
+                return Response(
+                    {"error": "user not enrolled in course"},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
+            course.students.remove(user)
+
+            return Response(
+                {"success": f"{user.email} is removed from course"},
+                status=status.HTTP_204_NO_CONTENT,
+            )
 
 
 class LessonModelViewset(viewsets.ModelViewSet):
