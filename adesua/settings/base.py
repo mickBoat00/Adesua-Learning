@@ -150,10 +150,29 @@ SPECTACULAR_SETTINGS = {
 }
 
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = BASE_DIR.parent / "static"
 STATICFILES_DIR = []
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = BASE_DIR.parent / "media"
 
+
+DJOSER = {
+    "LOGIN_FIELD": "email",
+    "USER_CREATE_PASSWORD_RETYPE": False,
+    "SEND_ACTIVATION_EMAIL": False,
+    "SEND_CONFIRMATION_EMAIL": False,
+    "PASSWORD_CHANGED_EMAIL_CONFIRMATION": False,
+    "USERNAME_CHANGED_EMAIL_CONFIRMATION": False,
+    "SET_PASSWORD_RETYPE": False,
+    "PASSWORD_RESET_CONFIRM_RETYPE": False,
+    # "USERNAME_RESET_CONFIRM_URL": "email/reset/confirm/{uid}/{token}",
+    # "ACTIVATION_URL": "activate/{uid}/{token}",
+    # "SERIALIZERS": {
+    #     "user_create": "apps.users.serializers.CreateUserSerializer",
+    #     "user": "apps.users.serializers.UserSerializer",
+    #     "current_user": "apps.users.serializers.UserSerializer",
+    #     "user_delete": "djoser.serializers.UserDeleteSerializer",
+    # },
+}
 
 PAYSTACK_SECRET_KEY = os.environ["PAYSTACK_SECRET_KEY"]
