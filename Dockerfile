@@ -19,4 +19,4 @@ RUN pip install --upgrade pip && pip install pip-tools && \
 
 COPY . .
 
-ENTRYPOINT ["sh", "/usr/src/app/scripts/docker-entrypoint.sh"]
+# ENTRYPOINT ["sh", "/usr/src/app/scripts/docker-entrypoint.sh"]
