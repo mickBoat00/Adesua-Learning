@@ -11,12 +11,10 @@ RUN apt-get update && \
 
 COPY ./requirements ./requirements
 COPY ./scripts ./scripts
-RUN pip install --upgrade pip && pip install pip-tools && \
-    pip-compile requirements/requirements.in && \
-    pip-sync requirements/requirements.txt && \
+RUN pip install -r  requirements/requirements.txt && \
     chmod +x ./scripts/docker-entrypoint.sh && \
     chmod 755 ./scripts/docker-entrypoint.sh
 
 COPY . .
 
-# ENTRYPOINT ["sh", "/usr/src/app/scripts/docker-entrypoint.sh"]
+ENTRYPOINT ["sh", "/usr/src/app/scripts/docker-entrypoint.sh"]
